@@ -95,7 +95,8 @@ function createTodo() {
 
   /* create span */
   const span = document.createElement("span");
-  const span_txt = document.createTextNode("\u00D7");
+  let span_txt = document.createElement("p");
+  span_txt.innerHTML = '-';
   span.classList.add("close");
   span.appendChild(span_txt);
 
