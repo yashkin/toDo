@@ -1,6 +1,8 @@
 const todos = document.querySelectorAll(".todo");
 const all_status = document.querySelectorAll(".status");
 let draggableTodo = null;
+let prevActions =[]; //  will create an array
+
 
 todos.forEach((todo) => {
   todo.addEventListener("dragstart", dragStart);
@@ -23,6 +25,14 @@ function dragEnd() {
   console.log("dragEnd");
 }
 
+function generateID () {
+   
+  let m = new Date();
+  return  String(m.getMinutes() +  String(m.getSeconds()) + String(m.getMilliseconds()));
+}
+
+
+
 all_status.forEach((status) => {
   status.addEventListener("dragover", dragOver);
   status.addEventListener("dragenter", dragEnter);
@@ -43,7 +53,14 @@ function dragEnter() {
 function dragLeave() {
   this.style.border = "none";
   console.log("dragLeave");
+  let column = this.id;
+  let todoid = draggableTodo.id
+
+  prevActions.push({"todoId": todoid, "columnId": column}); // will push the object to the array
+ console.log(prevActions)
 }
+
+
 
 function dragDrop() {
   this.style.border = "none";
@@ -85,7 +102,9 @@ const todo_submit = document.getElementById("todo_submit");
 todo_submit.addEventListener("click", createTodo);
 
 function createTodo() {
-  const todo_div = document.createElement("div");
+  let todo_div = document.createElement("div");
+  todo_div.id = generateID();
+  console.log(todo_div.id)
   const input_val = document.getElementById("todo_input").value;
   const txt = document.createTextNode(input_val);
 
@@ -95,14 +114,14 @@ function createTodo() {
 
   /* create span */
   const span = document.createElement("span");
-  let span_txt = document.createElement("p");
+  let span_txt = document.createElement("p.close");
   span_txt.innerHTML = '-';
   span.classList.add("close");
   span.appendChild(span_txt);
 
   todo_div.appendChild(span);
 
-  no_status.appendChild(todo_div);
+  in_progress.appendChild(todo_div);
 
   span.addEventListener("click", () => {
     span.parentElement.style.display = "none";
@@ -124,3 +143,26 @@ close_btns.forEach((btn) => {
     btn.parentElement.style.display = "none";
   });
 });
+
+/* move todo */
+
+document.onkeydown = function (event) {
+    if( event.code == 'KeyZ' && 'ControlLeft' ){
+        if( prevActions.length > 0 ){
+        
+   var lastAction = prevActions.at(-1);
+
+   var lastActionParentId = lastAction.columnId;
+   var lastActionTodoId = lastAction.todoId;
+
+   const lastActionTodo = document.getElementById(lastActionTodoId);
+
+   document.getElementById(lastActionParentId).appendChild(lastActionTodo);
+
+
+   prevActions.pop();
+  } else {
+   console.log("nothing to undo");
+  }
+    }
+}
