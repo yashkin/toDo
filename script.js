@@ -1,7 +1,9 @@
 const todos = document.querySelectorAll(".todo");
 const all_status = document.querySelectorAll(".status");
 let draggableTodo = null;
-let prevActions =[]; //  will create an array
+let prevActions = []; //  will create an array
+let nextActions = []; //  will create an array
+
 
 
 todos.forEach((todo) => {
@@ -147,22 +149,40 @@ close_btns.forEach((btn) => {
 /* move todo */
 
 document.onkeydown = function (event) {
-    if( event.code == 'KeyZ' && 'ControlLeft' ){
-        if( prevActions.length > 0 ){
-        
+  if (event.code == 'KeyZ' && 'ControlLeft') {
+    if (prevActions.length > 0) {
+ 
    var lastAction = prevActions.at(-1);
-
    var lastActionParentId = lastAction.columnId;
    var lastActionTodoId = lastAction.todoId;
-
+   
    const lastActionTodo = document.getElementById(lastActionTodoId);
 
    document.getElementById(lastActionParentId).appendChild(lastActionTodo);
 
-
+   nextActions.push(lastAction)
    prevActions.pop();
-  } else {
+
+ } else {
    console.log("nothing to undo");
-  }
+   }
+ }
+  // начинается второй блядский блок
+
+  if (event.code == 'KeyY' && 'ControlLeft') {
+    if (nextActions.length > 0)
+    {
+      var lastAction = nextActions.at(-1);
+      var lastActionParentId = lastAction.columnId;
+      var lastActionTodoId = lastAction.todoId;
+      const lastActionTodo = document.getElementById(lastActionTodoId);
+      
+      document.getElementById(lastActionParentId).appendChild(lastActionTodo);
+      prevActions.push(lastAction)
+      nextActions.pop();
     }
+    else {
+      console.log("nothing to redo");
+    }
+  }
 }
