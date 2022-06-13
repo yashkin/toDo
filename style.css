@@ -28,7 +28,7 @@ body {
     background-color: #e9e9e96b;
 }
 
-.status h1 {
+.status h2 {
     position: absolute;
     top: 0;
     left: 0;
@@ -37,6 +37,13 @@ body {
     margin: 0;
     width: 100%;
     padding: 0.5rem 1rem;
+}
+
+#done h2 {
+    background-color: green;
+}
+#in_progress h2 {
+    background-color: rgb(47, 0, 255);
 }
 
 #add_btn {
@@ -146,4 +153,15 @@ body {
     color: #f3f3f3;
     font-size: 1.25rem;
     border: none;
+}
+
+@media (max-width: 600px) {
+    .todo-container {
+        max-width: 100%;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+    }
+    
+    
 }
