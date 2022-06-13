@@ -2,6 +2,27 @@
     box-sizing: border-box;
 }
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+
+  vertical-align: baseline;
+}
+
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
@@ -157,11 +178,43 @@ body {
 
 @media (max-width: 600px) {
     .todo-container {
-        max-width: 100%;
-        height: 80vh;
+        max-width: 90%;
+        max-height: 80vh;
         display: flex;
         justify-content: center;
     }
     
+    h2 {
+        padding:0px;
+    }
+
+    .status h2 {
+      padding:  0;
+    }
+
+    h2 #done, h2 #in_progress {
+        padding: 0 ;
+        font-size: 12px;
+    }
+ 
+    
+    .status {
+        max-width: 40%;
+        background-color: #f3f3f3;
+        position: relative;
+        padding: 30px 1rem 0.5rem;
+    }
+
+    #add_btn {
+        padding: 0;
+        background-color: #ccc;
+        outline: none;
+        border: none;
+        max-width: 80%;
+        font-size: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 4px;
+        cursor: pointer;
+    }
     
 }
