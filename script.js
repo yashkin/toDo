@@ -148,41 +148,39 @@ close_btns.forEach((btn) => {
 
 /* move todo */
 
-document.onkeydown = function (event) {
-  if (event.code == 'KeyZ' && 'ControlLeft') {
-    if (prevActions.length > 0) {
- 
-   var lastAction = prevActions.at(-1);
-   var lastActionParentId = lastAction.columnId;
-   var lastActionTodoId = lastAction.todoId;
+document.addEventListener("keydown", function (event) {
    
-   const lastActionTodo = document.getElementById(lastActionTodoId);
-
-   document.getElementById(lastActionParentId).appendChild(lastActionTodo);
-
-   nextActions.push(lastAction)
-   prevActions.pop();
-
- } else {
-   console.log("nothing to undo");
-   }
- }
-  // начинается второй блядский блок
-
-  if (event.code == 'KeyY' && 'ControlLeft') {
-    if (nextActions.length > 0)
-    {
-      var lastAction = nextActions.at(-1);
+    if( event.ctrlKey && event.code =='KeyZ' ){ // Z
+  if (prevActions.length > 0) {
+   var lastAction = prevActions.at(-1);
       var lastActionParentId = lastAction.columnId;
       var lastActionTodoId = lastAction.todoId;
       const lastActionTodo = document.getElementById(lastActionTodoId);
-      
       document.getElementById(lastActionParentId).appendChild(lastActionTodo);
-      prevActions.push(lastAction)
-      nextActions.pop();
+
+      nextActions.push(lastAction);
+      console.log(nextActions);
+      prevActions.pop();
+
+   } else {
+      console.log("nothing to undo");
+     }
     }
-    else {
-      console.log("nothing to redo");
+    
+    if( event.ctrlKey && event.code =='KeyY' ){ // Y
+  if (nextActions.length > 0) {
+        var lastAction = nextActions.at(-1);
+        var lastActionParentId = lastAction.columnId;
+        var lastActionTodoId = lastAction.todoId;
+        const lastActionTodo = document.getElementById(lastActionTodoId);
+      
+        document.getElementById(lastActionParentId).appendChild(lastActionTodo);
+        prevActions.push(lastAction);
+        nextActions.pop();
+     }
+     else {
+        console.log("nothing to redo");
+     }
     }
-  }
-}
+   
+});
